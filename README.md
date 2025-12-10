@@ -23,3 +23,6 @@ Just as Mk3, Mk3.1 powers down if you remove the cartridge. However the Mainboar
 
 Once this is done, insert the writer cartridge, connect power and remove it once its booted up. Then you can write to cartridges using this ramdisk based install.
 
+## Building
+
+execute `sudo ./build.sh -c config` to build the image. For re-runs, `sudo rm -Rf deploy` and `sudo rm -Rf work` to clean everything up.
