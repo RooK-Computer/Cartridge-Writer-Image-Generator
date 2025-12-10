@@ -16,6 +16,7 @@ on_chroot <<- EOF
 	fi
 	install -m 755 -o systemd-timesync -g systemd-timesync -d /var/lib/systemd/timesync
 	install -m 644 -o systemd-timesync -g systemd-timesync /dev/null /var/lib/systemd/timesync/clock
+	find /var/lib/apt/lists -type f -delete 
 EOF
 
 if [ -f "${ROOTFS_DIR}/etc/initramfs-tools/update-initramfs.conf" ]; then

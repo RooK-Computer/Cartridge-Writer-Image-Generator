@@ -1,0 +1,26 @@
+#!/bin/sh
+PREREQ=""
+
+prereqs() { echo "$PREREQ"; }
+
+case "$1" in
+	prereqs)
+		prereqs
+		exit 0
+		;;
+esac
+
+SRC=/dev/mmcblk0p2
+DST=/dev/ram1
+
+sleep 2
+clear
+echo "================"
+echo "      RooK      "
+echo "Cartridge Writer"
+echo ""
+echo "================"
+
+pv "$SRC" | dd of="$DST" bs=4M
+echo "ROOT=$DST" > /conf/param.conf
+

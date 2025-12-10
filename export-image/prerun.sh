@@ -18,13 +18,16 @@ ALIGN="$((8 * 1024 * 1024))"
 # some overhead (since actual space usage is usually rounded up to the
 # filesystem block size) and gives some free space on the resulting
 # image.
-ROOT_MARGIN="$(echo "($ROOT_SIZE * 0.2 + 200 * 1024 * 1024) / 1" | bc)"
+ROOT_MARGIN="$(echo "($ROOT_SIZE * 0.2 + 50 * 1024 * 1024) / 1" | bc)"
 
 BOOT_PART_START=$((ALIGN))
 BOOT_PART_SIZE=$(((BOOT_SIZE + ALIGN - 1) / ALIGN * ALIGN))
 ROOT_PART_START=$((BOOT_PART_START + BOOT_PART_SIZE))
 ROOT_PART_SIZE=$(((ROOT_SIZE + ROOT_MARGIN + ALIGN  - 1) / ALIGN * ALIGN))
 IMG_SIZE=$((BOOT_PART_START + BOOT_PART_SIZE + ROOT_PART_SIZE))
+
+RAMDISK_SIZE=$((ROOT_PART_SIZE / 1024))
+sed -i "s/\$/ ramdisk_size=${RAMDISK_SIZE}/" ${EXPORT_ROOTFS_DIR}/boot/firmware/cmdline.txt
 
 truncate -s "${IMG_SIZE}" "${IMG_FILE}"
 
