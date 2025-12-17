@@ -19,8 +19,6 @@ rm -rf /usr/share/man/*
 rm -rf /usr/share/info/*
 rm -rf /usr/share/locale/*
 
-cd /usr/lib/firmware
-ls | grep -v -E '^(brcm|regulatory)' | xargs rm -rf
 EOF
 
 sync
