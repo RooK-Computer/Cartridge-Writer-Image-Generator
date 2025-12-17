@@ -18,7 +18,7 @@ ALIGN="$((8 * 1024 * 1024))"
 # some overhead (since actual space usage is usually rounded up to the
 # filesystem block size) and gives some free space on the resulting
 # image.
-ROOT_MARGIN="$(echo "($ROOT_SIZE * 0.2 + 50 * 1024 * 1024) / 1" | bc)"
+ROOT_MARGIN="$(echo "($ROOT_SIZE * 0.2) / 1" | bc)"
 
 BOOT_PART_START=$((ALIGN))
 BOOT_PART_SIZE=$(((BOOT_SIZE + ALIGN - 1) / ALIGN * ALIGN))
@@ -66,7 +66,7 @@ else
 fi
 
 mkdosfs -n bootfs -F "$FAT_SIZE" -s 4 -v "$BOOT_DEV" > /dev/null
-mkfs.ext4 -L rootfs -O "$ROOT_FEATURES" "$ROOT_DEV" > /dev/null
+mkfs.ext4 -L rootfs -O "$ROOT_FEATURES" -m 0 "$ROOT_DEV" > /dev/null
 
 mount -v "$ROOT_DEV" "${ROOTFS_DIR}" -t ext4
 mkdir -p "${ROOTFS_DIR}/boot/firmware"
